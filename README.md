@@ -2,7 +2,7 @@
 
 A powerful, interactive web application for monitoring and analyzing environmental data in Kenya using remote sensing technology. Built with **Flask**, **Google Earth Engine (GEE)**, and **Leaflet.js**, this dashboard provides real-time insights into vegetation health, land surface temperature, land cover changes, and topographic analysis.
 
-![Dashboard Preview](app_page-0001.jpg)
+![Dashboard Preview](app_page-0001.png)
 
 ## 🚀 Key Features
 
