@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geospatial Analytics Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-layer-group"></i> Geo<span>Dash</span>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label><i class="fa-solid fa-location-dot"></i> Region</label>
+          <div class="select-wrapper">
+            <select id="region">
+              <option value="Nyeri" selected>Nyeri</option>
+              <option value="Baringo">Baringo</option>
+              <option value="Bomet">Bomet</option>
+              <option value="Bungoma">Bungoma</option>
+              <option value="Busia">Busia</option>
+              <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
+              <option value="Embu">Embu</option>
+              <option value="Garissa">Garissa</option>
+              <option value="Homa Bay">Homa Bay</option>
+              <option value="Isiolo">Isiolo</option>
+              <option value="Kajiado">Kajiado</option>
+              <option value="Kakamega">Kakamega</option>
+                    <option value="Kericho">Kericho</option>
+                    <option value="Kiambu">Kiambu</option>
+                    <option value="Kilifi">Kilifi</option>
+                    <option value="Kirinyaga">Kirinyaga</option>
+                    <option value="Kisii">Kisii</option>
+                    <option value="Kisumu">Kisumu</option>
+                    <option value="Kitui">Kitui</option>
+                    <option value="Kwale">Kwale</option>
+                    <option value="Laikipia">Laikipia</option>
+                    <option value="Lamu">Lamu</option>
+                    <option value="Machakos">Machakos</option>
+                    <option value="Makueni">Makueni</option>
+                    <option value="Mandera">Mandera</option>
+                    <option value="Marsabit">Marsabit</option>
+                    <option value="Meru">Meru</option>
+                    <option value="Migori">Migori</option>
+                    <option value="Mombasa">Mombasa</option>
+                    <option value="Murang'a">Murang'a</option>
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Nandi">Nandi</option>
+                    <option value="Narok">Narok</option>
+                    <option value="Nyamira">Nyamira</option>
+                    <option value="Nyandarua">Nyandarua</option>
+                    <option value="Samburu">Samburu</option>
+                    <option value="Siaya">Siaya</option>
+                    <option value="Taita Taveta">Taita Taveta</option>
+                    <option value="Tana River">Tana River</option>
+                    <option value="Tharaka-Nithi">Tharaka-Nithi</option>
+                    <option value="Trans Nzoia">Trans Nzoia</option>
+                    <option value="Turkana">Turkana</option>
+                    <option value="Uasin Gishu">Uasin Gishu</option>
+                    <option value="Vihiga">Vihiga</option>
+                    <option value="Wajir">Wajir</option>
+                    <option value="West Pokot">West Pokot</option>
+
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group" id="raster-controls">
+          <label><i class="fa-solid fa-database"></i> Dataset</label>
+          <div class="select-wrapper">
+            <select id="dataset">
+              <option value="NDVI">NDVI (Vegetation)</option>
+              <option value="LST">LST (Temperature)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label><i class="fa-regular fa-calendar"></i> Period</label>
+          <div class="date-inputs">
+            <input type="date" id="start-date" />
+            <input type="date" id="end-date" />
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label><i class="fa-solid fa-clock-rotate-left"></i> LULC Year</label>
+          <div class="select-wrapper">
+            <select id="year-select">
+              <option value="2020">2020</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025" selected>2025</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="apply-btn" onclick="updateDashboard()">
+          Update Analysis
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>
+          <span>Built with GEE & Python</span>
+          <p><span>Developed with love❤️ by Charles Churu</span></p>
+          <p>© 2024 GeoDash Inc. All rights reserved.</p>
+        </p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-nav">
+        <h1>Environmental Analysis</h1>
+        <div class="user-profile">
+          <span>Kenya Region</span>
+          <div class="avatar"><i class="fa-solid fa-earth-africa"></i></div>
+        </div>
+      </header>
+
+      <div class="dashboard-grid">
+        <div class="tabs-container">
+          <button class="tab-btn active" onclick="switchView('raster', this)">
+            Raster Analysis
+          </button>
+          <button class="tab-btn" onclick="switchView('vector', this)">
+            Vector Data
+          </button>
+          <button class="tab-btn" onclick="switchView('terrain', this)">
+            3D Terrain
+          </button>
+        </div>
+
+        <div class="row top-row">
+          <div class="card map-card">
+            <div class="card-header">
+              <h3>Spatial Visualization</h3>
+              <button class="icon-btn" title="Expand Map">
+                <i class="fa-solid fa-expand"></i>
+              </button>
+            </div>
+
+            <div class="card-body map-body">
+              <div id="view-container" class="view-section">
+                <div id="map"></div>
+                <div id="legend" class="map-legend">
+                  <span id="legend-low">Low</span>
+                  <div class="gradient-bar"></div>
+                  <span id="legend-high">High</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="card-header">
+              <h3>Temporal Trend</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="timeSeriesChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row bottom-row">
+          <div class="card stats-card">
+            <div class="card-header">
+              <h3>Key Statistics</h3>
+            </div>
+            <div class="stats-container">
+              <div class="stat-item">
+                <span class="stat-label"></span>
+                <span class="stat-value" id="stat-mean">--</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label"></span>
+                <span class="stat-value" id="stat-max">--</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label"></span>
+                <span class="stat-value" id="stat-min">--</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card pie-card">
+            <div class="card-header">
+              <h3>Land Cover (<span id="current-year">2024</span>)</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="landCoverChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="action-footer">
+        <div class="footer-glass">
+          <button class="footer-btn" id="btn-download" onclick="downloadData()">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <span>Download CSV</span>
+          </button>
+          <div class="divider"></div>
+          <button class="footer-btn" id="btn-report" onclick="generateReport()">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>Generate Report</span>
+          </button>
+          <div class="divider"></div>
+          <button
+            class="footer-btn"
+            onclick="alert('Developed by Charles Churu. \nSystem Version 1.0.0')"
+          >
+            <i class="fa-solid fa-circle-info"></i>
+            <span>About</span>
+          </button>
+        </div>
+      </footer>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

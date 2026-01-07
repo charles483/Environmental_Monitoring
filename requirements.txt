@@ -1,0 +1,4 @@
+flask
+earthengine-api
+pandas
+python-docx
