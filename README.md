@@ -101,7 +101,7 @@ Before you begin, ensure you have the following installed:
 ├── app.py                 # Main Flask Application (Backend API)
 ├── requirements.txt       # Python dependencies
 ├── templates/
-│   └── dashboard.html     # Main User Interface (HTML)
+│   └── index.html     # Main User Interface (HTML)
 └── static/
     ├── style.css          # Styling (CSS)
     └── script.js          # Client-side Logic (JS)
