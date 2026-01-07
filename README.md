@@ -25,7 +25,7 @@ A powerful, interactive web application for monitoring and analyzing environment
 
 - **Backend:** Python 3, Flask
 - **Geospatial Engine:** Google Earth Engine (GEE) API
-- **Frontend:** HTML5, CSS3, JavaScript
+- **Frontend:** HTML5, CSS3 and JavaScript
 - **Libraries:**
   - [Leaflet.js](https://leafletjs.com/) (Interactive Maps)
   - [Chart.js](https://www.chartjs.org/) (Data Visualization)
