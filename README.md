@@ -44,8 +44,8 @@ Before you begin, ensure you have the following installed:
 1.  **Clone the Repository**
 
     ```bash
-    git clone [https://github.com/yourusername/geospatial-dashboard.git](https://github.com/yourusername/geospatial-dashboard.git)
-    cd geospatial-dashboard
+    git clone [https://github.com/charles483/Environmental_Monitoring.git](https://github.com/charles483/Environmental_Monitoring.git)
+    cd Environmental_Monitoring
     ```
 
 2.  **Create a Virtual Environment (Optional but Recommended)**
@@ -100,7 +100,6 @@ Before you begin, ensure you have the following installed:
 │
 ├── app.py                 # Main Flask Application (Backend API)
 ├── requirements.txt       # Python dependencies
-├── generate_docs.py       # Script to generate project documentation
 ├── templates/
 │   └── dashboard.html     # Main User Interface (HTML)
 └── static/
