@@ -1,4 +1,4 @@
-# Geospatial Analytics Dashboard 🌍
+# Environmental Monitoring Dashboard 🌍
 
 A powerful, interactive web application for monitoring and analyzing environmental data in Kenya using remote sensing technology. Built with **Flask**, **Google Earth Engine (GEE)**, and **Leaflet.js**, this dashboard provides real-time insights into vegetation health, land surface temperature, land cover changes, and topographic analysis.
 
@@ -96,7 +96,7 @@ Before you begin, ensure you have the following installed:
 ## 📂 Project Structure
 
 ```text
-/geospatial-dashboard
+/Environmental_Monitoring
 │
 ├── app.py                 # Main Flask Application (Backend API)
 ├── requirements.txt       # Python dependencies
